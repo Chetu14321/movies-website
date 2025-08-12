@@ -15,6 +15,8 @@ authRoute.get('/logout',logoutController);
 //verify email address
 authRoute.get('/verify',authMiddleware,verifyController);
 
+//get all users
+authRoute.get('/getall',getAllUsersController)
 //update password
 authRoute.patch('/update/Password',updatePassController);
 

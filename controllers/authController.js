@@ -211,10 +211,18 @@ const getUserCountController = async (req, res) => {
     res.status(500).json({ msg: err.message });
   }
 };
+const getAllUsersController = async (req, res) => {
+  try {
+    const users = await UserModel.find().select("-password -otp"); // exclude sensitive fields
+    res.status(200).json(users);
+  } catch (err) {
+    res.status(500).json({ msg: err.message });
+  }
+};
 
 
 
-module.exports={getUserCountController,regController,loginController,verifyController,forgotPassController,updatePassController,logoutController}
+module.exports={getAllUsersController,getUserCountController,regController,loginController,verifyController,forgotPassController,updatePassController,logoutController}
 
 
 

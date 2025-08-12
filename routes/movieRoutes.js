@@ -4,8 +4,9 @@ const movieController = require('../controllers/movieController');
 
 router.post('/add', movieController.addMovie);
 router.get('/getall', movieController.getAllMovies);
+router.get('/count/total', movieController.getMovieCount);
 router.get('/:movieId', movieController.getMovieById);
 router.delete('/:movieId', movieController.deleteMovie);
-router.get('/count/total', movieController.getMovieCount);
+
 
 module.exports = router;

@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Typography,
-  Grid,
   CircularProgress,
   TextField,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../../Hooks/useAuth'; // import your auth hook
+import useAuth from '../../Hooks/useAuth';
 import MovieCard from './MovieCard';
 import './Home.css';
 import { toast } from 'react-toastify';
@@ -25,7 +24,7 @@ const Home = () => {
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  const { isLogin } = useAuth(); // check auth
+  const { isLogin } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,14 +52,23 @@ const Home = () => {
     if (isLogin) {
       navigate(`/movies/${movieId}`);
     } else {
-      toast.success("login first to Watch the Movie")
+      toast.info('Login first to watch the movie');
       navigate('/login');
     }
   };
 
   return (
-    <Box sx={{ backgroundColor: '#111', color: '#fff', minHeight: '100vh', px: 3, py: 4, mt: 7 }}>
-      {/* Title and Search Box */}
+    <Box
+      sx={{
+        backgroundColor: '#111',
+        color: '#fff',
+        minHeight: '100vh',
+        px: 3,
+        py: 4,
+        mt: 7,
+      }}
+    >
+      {/* Title and Search */}
       <Box
         sx={{
           border: '1px solid white',
@@ -74,7 +82,11 @@ const Home = () => {
           mb: 5,
         }}
       >
-        <Typography variant="h4" fontWeight="bold">
+        <Typography
+          variant="h4"
+          fontWeight="bold"
+          sx={{ fontSize: { xs: '1.6rem', sm: '2rem', md: '2.5rem' } }}
+        >
           🎬 Kannada Movies
         </Typography>
 
@@ -100,27 +112,44 @@ const Home = () => {
         />
       </Box>
 
-      {/* Loading / Movie Grid */}
+      {/* Loading or Grid */}
       {loading ? (
         <Box sx={{ textAlign: 'center', mt: 10 }}>
           <CircularProgress color="secondary" />
         </Box>
       ) : filteredMovies.length === 0 ? (
-        <Typography variant="h6">No movies found matching your search.</Typography>
+        <Typography variant="h6">
+          No movies found matching your search.
+        </Typography>
       ) : (
-        <Grid container spacing={2}>
+        <Box
+          className="movie-grid"
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+              xs: 'repeat(2, 1fr)',    // 2 columns on mobile
+              sm: 'repeat(3, 1fr)',    // 3 on small tablets
+              md: 'repeat(4, 1fr)',    // 4 on medium
+              lg: 'repeat(5, 1fr)',    // 5 on large screens
+            },
+            gap: 2,
+          }}
+        >
           {filteredMovies.map((movie) => (
-            <Grid item xs={12} sm={6} md={4} lg={2.4} key={movie._id}>
-              <Box
-                sx={{ border: '1px solid white', borderRadius: 2 }}
-                onClick={() => handleMovieClick(movie._id)}
-                style={{ cursor: 'pointer' }}
-              >
-                <MovieCard movie={movie} />
-              </Box>
-            </Grid>
+            <Box
+              key={movie._id}
+              sx={{
+                border: '1px solid white',
+                borderRadius: 2,
+                p: 1,
+                cursor: 'pointer',
+              }}
+              onClick={() => handleMovieClick(movie._id)}
+            >
+              <MovieCard movie={movie} />
+            </Box>
           ))}
-        </Grid>
+        </Box>
       )}
 
       {/* Logo Marquee */}

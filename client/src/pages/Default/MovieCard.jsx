@@ -6,10 +6,10 @@ import { Link } from 'react-router-dom';
 const MovieCard = ({ movie }) => {
   return (
     <Link to={`/movies/${movie._id}`} style={{ textDecoration: 'none' }}>
-      <Card sx={{ backgroundColor: '#1c1c1c', color: '#fff', borderRadius: 2 }}>
+      <Card sx={{ backgroundColor: '#1c1c1c', color: '#fc1717ff', borderRadius: 2 }}>
         <CardMedia
           component="img"
-          height="300"
+          height="200"
           image={movie.thumbnailUrl || '/fallback.jpg'}
           alt={movie.title}
         />
