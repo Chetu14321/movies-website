@@ -54,5 +54,5 @@ app.use((err, req, res, next) => {
 // Start server and connect DB
 app.listen(PORT, () => {
   connectdb();
-  console.log(`✅ Backend running at http://localhost:${PORT}`);
+  console.log(`✅ Backend running at http://localhost:${PORT}.....`);
 });
